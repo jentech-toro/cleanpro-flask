@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="bg-gradient-to-r from-emerald-600 to-cyan-600 text-white">
+
+    <div class="max-w-7xl mx-auto px-6 py-24">
+
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+            <div>
+
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">
+
+                    ⭐ Más de 500 clientes satisfechos
+
+                </span>
+
+                <h1 class="text-6xl font-bold mt-8 leading-tight">
+
+                    Limpieza impecable para hogares y empresas
+
+                </h1>
+
+                <p class="text-xl mt-8 opacity-90">
+
+                    Servicios especializados y suministros profesionales para mantener cualquier espacio limpio, seguro y saludable.
+
+                </p>
+
+                <div class="flex gap-4 mt-10">
+
+                    <button class="bg-white text-emerald-700 px-8 py-4 rounded-xl font-bold hover:scale-105 transition">
+
+                        Contratar Servicio
+
+                    </button>
+
+                    <button class="border border-white px-8 py-4 rounded-xl hover:bg-white hover:text-emerald-700 transition">
+
+                        Comprar Productos
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="bg-white/20 rounded-3xl h-96 flex items-center justify-center text-9xl">
+
+                    🧹
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Servicios -->
+
+<section class="max-w-7xl mx-auto px-6 py-20">
+
+    <h2 class="text-4xl font-bold mb-10">
+        Nuestros Servicios
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+        {% for servicio in servicios %}
+
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+
+            <div class="text-6xl">
+                {{ servicio.icono }}
+            </div>
+
+            <h3 class="text-2xl font-bold mt-6">
+                {{ servicio.titulo }}
+            </h3>
+
+            <p class="mt-4 text-gray-600">
+                {{ servicio.descripcion }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- Beneficios -->
+
+<section class="py-24 bg-white">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <h2 class="text-4xl font-bold text-center">
+            ¿Por qué elegirnos?
+        </h2>
+
+        <div class="grid md:grid-cols-4 gap-8 mt-12">
+
+            {% for item in beneficios %}
+
+            <div class="text-center p-8 shadow rounded-2xl bg-gray-50">
+
+                <div class="text-6xl">
+                    {{ item.icono }}
+                </div>
+
+                <h3 class="text-2xl font-bold mt-6">
+                    {{ item.titulo }}
+                </h3>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+body{
+    scroll-behavior:smooth;
+}
+
+.hero-gradient{
+    background:linear-gradient(135deg,#059669,#0ea5e9);
+}
+
+.card-hover{
+    transition:.3s;
+}
+
+.card-hover:hover{
+    transform:translateY(-8px);
+}
