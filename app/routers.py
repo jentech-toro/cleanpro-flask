@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template
-from app.models.product import Product
-from flask import request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for
+from app.models.product import Product, db
 
 
 main = Blueprint("main", __name__)
@@ -39,9 +38,16 @@ def home():
 @main.route("/admin")
 def admin():
 
-    productos = Product.query.all()
+    search = request.args.get("search")
 
-    return render_template("admin.html", productos=productos)
+    if search:
+        productos = Product.query.filter(
+            Product.nombre.contains(search)
+        ).all()
+    else:
+        productos = Product.query.all()
+
+    return render_template("admin.html", productos=productos, search=search)
 
 @main.route("/admin/create", methods=["POST"])
 def create_product():
@@ -89,9 +95,27 @@ def edit_product(id):
         producto.precio = float(request.form["precio"])
         producto.stock = int(request.form["stock"])
 
-        from app import db
+        from app.models.product import db
         db.session.commit()
 
         return redirect(url_for("main.admin"))
 
     return render_template("edit.html", producto=producto)
+
+@main.route("/dashboard")
+def dashboard():
+
+    productos = Product.query.all()
+
+    total_productos = len(productos)
+
+    stock_total = sum(p.stock for p in productos)
+
+    valor_inventario = sum(p.precio * p.stock for p in productos)
+
+    return render_template(
+    "dashboard.html",
+    total_productos=total_productos,
+    stock_total=stock_total,
+    valor_inventario=valor_inventario
+)
