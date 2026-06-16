@@ -129,6 +129,37 @@
     </div>
 
 </section>
+<section class="max-w-7xl mx-auto px-6 py-20">
+
+    <h2 class="text-4xl font-bold mb-10">
+        Productos Destacados
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+        {% for p in productos %}
+
+        <div class="bg-white p-6 rounded-2xl shadow">
+
+            <h3 class="text-2xl font-bold">
+                {{ p.nombre }}
+            </h3>
+
+            <p class="text-gray-600 mt-2">
+                {{ p.descripcion }}
+            </p>
+
+            <p class="mt-4 font-bold text-emerald-600">
+                ${{ p.precio }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
 
 {% endblock %}
 

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - CleanPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="max-w-6xl mx-auto p-10">
+
+    <h1 class="text-4xl font-bold mb-10">
+        🧑‍💼 Panel Admin CleanPro
+    </h1>
+
+    <div class="bg-white p-6 rounded-xl shadow mb-10">
+
+    <h2 class="text-2xl font-bold mb-4">
+        ➕ Agregar Producto
+    </h2>
+
+    <form action="/admin/create" method="POST" class="grid gap-4">
+
+        <input name="nombre" placeholder="Nombre"
+               class="border p-2 rounded" required>
+
+        <input name="descripcion" placeholder="Descripción"
+               class="border p-2 rounded">
+
+        <input name="precio" type="number" step="0.01"
+               placeholder="Precio"
+               class="border p-2 rounded" required>
+
+        <input name="stock" type="number"
+               placeholder="Stock"
+               class="border p-2 rounded">
+
+        <button class="bg-emerald-600 text-white p-3 rounded hover:bg-emerald-700">
+            Guardar Producto
+        </button>
+
+    </form>
+
+</div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+        {% for p in productos %}
+
+        <div class="mt-5 flex justify-between items-center">
+
+    <span class="text-sm text-gray-500">
+        Stock: {{ p.stock }}
+    </span>
+
+    <div class="flex gap-2">
+
+        <a href="/admin/edit/{{ p.id }}"
+           class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition">
+            ✏️
+        </a>
+
+        <a href="/admin/delete/{{ p.id }}"
+           onclick="return confirm('¿Eliminar producto?')"
+           class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm transition">
+            🗑️
+        </a>
+
+    </div>
+
+</div>
+
+        <div class="bg-white p-6 rounded-xl shadow">
+
+            <h2 class="text-xl font-bold">
+                {{ p.nombre }}
+            </h2>
+
+            <p class="text-gray-600 mt-2">
+                {{ p.descripcion }}
+            </p>
+
+            <p class="mt-4 font-bold text-emerald-600">
+                ${{ p.precio }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

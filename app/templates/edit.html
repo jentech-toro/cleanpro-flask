@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Producto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="max-w-xl mx-auto p-10">
+
+    <h1 class="text-3xl font-bold mb-6">
+        ✏️ Editar Producto
+    </h1>
+
+    <form method="POST" class="grid gap-4 bg-white p-6 rounded-xl shadow">
+
+        <input name="nombre"
+               value="{{ producto.nombre }}"
+               class="border p-2 rounded">
+
+        <input name="descripcion"
+               value="{{ producto.descripcion }}"
+               class="border p-2 rounded">
+
+        <input name="precio" type="number" step="0.01"
+               value="{{ producto.precio }}"
+               class="border p-2 rounded">
+
+        <input name="stock" type="number"
+               value="{{ producto.stock }}"
+               class="border p-2 rounded">
+
+        <button class="bg-blue-600 text-white p-3 rounded">
+            Guardar Cambios
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
