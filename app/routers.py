@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models.product import Product, db
+import os
+from werkzeug.utils import secure_filename
 
 
 main = Blueprint("main", __name__)
@@ -57,16 +59,24 @@ def create_product():
     precio = request.form["precio"]
     stock = request.form["stock"]
 
+    imagen_file = request.files["imagen"]
+
+    filename = None
+
+    if imagen_file and imagen_file.filename != "":
+        filename = secure_filename(imagen_file.filename)
+        ruta = os.path.join("app/static/images/products", filename)
+        imagen_file.save(ruta)
+
     nuevo = Product(
         nombre=nombre,
         descripcion=descripcion,
         precio=float(precio),
-        stock=int(stock) if stock else 0
+        stock=int(stock) if stock else 0,
+        imagen=filename
     )
 
-
-
-    from app import db
+    from app.models.product import db
     db.session.add(nuevo)
     db.session.commit()
 
