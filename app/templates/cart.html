@@ -8,30 +8,66 @@
         🧺 Tu Carrito
     </h1>
 
-    {% for p in productos %}
+    {% for item in items %}
 
     <div class="bg-white p-6 rounded-xl shadow mb-4">
 
-        <h2 class="text-xl font-bold">{{ p.nombre }}</h2>
-        <p>{{ p.descripcion }}</p>
-        <p class="text-emerald-600 font-bold">${{ p.precio }}</p>
-        <a href="/remove-from-cart/{{ p.id }}"
-           class="mt-2 inline-block bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+        <h2 class="text-xl font-bold">
+            {{ item.producto.nombre }}
+        </h2>
 
-           ➖ Eliminar  </a>
+        <p class="text-gray-600">
+            Cantidad: {{ item.cantidad }}
+        </p>
+
+        <p class="text-emerald-600 font-bold">
+            Subtotal: ${{ item.subtotal }}
+        </p>
+
+        <a href="/remove-from-cart/{{ item.producto.id }}"
+           class="text-red-500 mt-2 inline-block">
+            🗑️ Eliminar
+        </a>
+
+
+        <div class="flex items-center gap-3 mt-3">
+
+    <a href="/decrease-cart/{{ item.producto.id }}"
+       class="bg-gray-300 px-3 py-1 rounded">
+        ➖
+    </a>
+
+    <span class="font-bold">
+        {{ item.cantidad }}
+    </span>
+
+    <a href="/add-to-cart/{{ item.producto.id }}"
+       class="bg-gray-300 px-3 py-1 rounded">
+        ➕
+    </a>
+
+</div>
 
     </div>
 
     {% endfor %}
 
-</div>
+    <div class="mt-10 bg-gray-100 p-6 rounded-xl text-right">
 
+        <h2 class="text-2xl font-bold">
+            Total: ${{ total }}
+        </h2>
 
-<div class="mt-10 bg-gray-100 p-6 rounded-xl text-right">
+        <a href="https://wa.me/14165551234?text={{ mensaje }}"
+           target="_blank"
+           class="mt-6 inline-block bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600">
 
-    <h2 class="text-2xl font-bold">
-        Total: ${{ total }}
-    </h2>
+            📲 Pagar por WhatsApp
+        </a>
+
+        
+
+    </div>
 
 </div>
 

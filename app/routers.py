@@ -135,36 +135,90 @@ from flask import session
 @main.route("/add-to-cart/<int:id>")
 def add_to_cart(id):
 
-    cart = session.get("cart", [])
+    cart = session.get("cart", {})
 
-    cart.append(id)
+    cart[str(id)] = cart.get(str(id), 0) + 1
 
     session["cart"] = cart
 
-    return redirect(url_for("main.home"))
+    return redirect(url_for("main.cart"))
+
 
 @main.route("/cart")
 def cart():
 
-    cart_ids = session.get("cart", [])
+    cart = session.get("cart", {})
 
-    productos = Product.query.filter(Product.id.in_(cart_ids)).all()
+    # 🔥 SI ES LISTA (modo viejo), convertirlo
+    if isinstance(cart, list):
+        new_cart = {}
+        for item in cart:
+            new_cart[str(item)] = new_cart.get(str(item), 0) + 1
+        cart = new_cart
+        session["cart"] = cart
 
-    total = sum(p.precio for p in productos)
+    ids = [int(i) for i in cart.keys()] if cart else []
+
+    productos = Product.query.filter(Product.id.in_(ids)).all() if ids else []
+
+    total = 0
+
+    productos_con_cantidad = []
+
+    for p in productos:
+        cantidad = cart.get(str(p.id), 0)
+        subtotal = p.precio * cantidad
+        total += subtotal
+
+        productos_con_cantidad.append({
+            "producto": p,
+            "cantidad": cantidad,
+            "subtotal": subtotal
+        })
+
+    mensaje = "Hola, quiero comprar:%0A"
+
+    for item in productos_con_cantidad:
+        p = item["producto"]
+        mensaje += f"- {p.nombre} x{item['cantidad']} = ${item['subtotal']}%0A"
+
+    mensaje += f"%0ATotal: ${total}"
 
     return render_template(
         "cart.html",
-        productos=productos,
-        total=total
+        items=productos_con_cantidad,
+        total=total,
+        mensaje=mensaje
     )
+
 
 @main.route("/remove-from-cart/<int:id>")
 def remove_from_cart(id):
 
-    cart = session.get("cart", [])
+    cart = session.get("cart", {})
 
-    if id in cart:
-        cart.remove(id)
+    key = str(id)
+
+    if key in cart:
+        del cart[key]
+
+    session["cart"] = cart
+
+    return redirect(url_for("main.cart"))
+
+@main.route("/decrease-cart/<int:id>")
+def decrease_cart(id):
+
+    cart = session.get("cart", {})
+
+    key = str(id)
+
+    if key in cart:
+
+        cart[key] -= 1
+
+        if cart[key] <= 0:
+            del cart[key]
 
     session["cart"] = cart
 
