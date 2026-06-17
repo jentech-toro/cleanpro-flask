@@ -129,3 +129,25 @@ def dashboard():
     stock_total=stock_total,
     valor_inventario=valor_inventario
 )
+
+from flask import session
+
+@main.route("/add-to-cart/<int:id>")
+def add_to_cart(id):
+
+    cart = session.get("cart", [])
+
+    cart.append(id)
+
+    session["cart"] = cart
+
+    return redirect(url_for("main.home"))
+
+@main.route("/cart")
+def cart():
+
+    cart_ids = session.get("cart", [])
+
+    productos = Product.query.filter(Product.id.in_(cart_ids)).all()
+
+    return render_template("cart.html", productos=productos)
