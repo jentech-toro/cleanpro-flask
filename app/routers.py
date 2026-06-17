@@ -149,7 +149,6 @@ def cart():
 
     cart = session.get("cart", {})
 
-    # 🔥 SI ES LISTA (modo viejo), convertirlo
     if isinstance(cart, list):
         new_cart = {}
         for item in cart:
@@ -176,6 +175,8 @@ def cart():
             "subtotal": subtotal
         })
 
+    total = round(total, 2)
+
     mensaje = "Hola, quiero comprar:%0A"
 
     for item in productos_con_cantidad:
@@ -190,7 +191,6 @@ def cart():
         total=total,
         mensaje=mensaje
     )
-
 
 @main.route("/remove-from-cart/<int:id>")
 def remove_from_cart(id):
@@ -222,4 +222,9 @@ def decrease_cart(id):
 
     session["cart"] = cart
 
+    return redirect(url_for("main.cart"))
+
+@main.route("/clear-cart")
+def clear_cart():
+    session.pop("cart", None)
     return redirect(url_for("main.cart"))
