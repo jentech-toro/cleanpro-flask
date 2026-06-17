@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Login</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+
+    <form action="/login" method="POST"
+          class="bg-white p-10 rounded-xl shadow-lg w-96">
+
+        <h1 class="text-3xl font-bold mb-6 text-center">
+            🔐 Admin CleanPro
+        </h1>
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Usuario"
+            class="border w-full p-3 rounded mb-4"
+            required>
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            class="border w-full p-3 rounded mb-6"
+            required>
+
+        <button
+            class="w-full bg-emerald-600 text-white p-3 rounded-lg hover:bg-emerald-700">
+
+            Ingresar
+
+        </button>
+
+    </form>
+
+</body>
+
+</html>

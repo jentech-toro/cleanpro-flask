@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models.product import Product, db
 import os
 from werkzeug.utils import secure_filename
+from flask import session
 
 
 main = Blueprint("main", __name__)
@@ -40,6 +41,9 @@ def home():
 @main.route("/admin")
 def admin():
 
+    if not session.get("admin"):
+        return redirect(url_for("main.login"))
+
     search = request.args.get("search")
 
     if search:
@@ -49,7 +53,11 @@ def admin():
     else:
         productos = Product.query.all()
 
-    return render_template("admin.html", productos=productos, search=search)
+    return render_template(
+        "admin.html",
+        productos=productos,
+        search=search
+    )
 
 @main.route("/admin/create", methods=["POST"])
 def create_product():
@@ -115,22 +123,23 @@ def edit_product(id):
 @main.route("/dashboard")
 def dashboard():
 
+    if not session.get("admin"):
+        return redirect(url_for("main.login"))
+
     productos = Product.query.all()
 
     total_productos = len(productos)
-
     stock_total = sum(p.stock for p in productos)
-
     valor_inventario = sum(p.precio * p.stock for p in productos)
 
     return render_template(
-    "dashboard.html",
-    total_productos=total_productos,
-    stock_total=stock_total,
-    valor_inventario=valor_inventario
-)
+        "dashboard.html",
+        total_productos=total_productos,
+        stock_total=stock_total,
+        valor_inventario=valor_inventario
+    )
 
-from flask import session
+
 
 @main.route("/add-to-cart/<int:id>")
 def add_to_cart(id):
@@ -228,3 +237,32 @@ def decrease_cart(id):
 def clear_cart():
     session.pop("cart", None)
     return redirect(url_for("main.cart"))
+
+@main.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if username == "admin" and password == "123456":
+
+            session["admin"] = True
+
+            return redirect(url_for("main.dashboard"))
+
+        return render_template(
+            "login.html",
+            error="Usuario o contraseña incorrectos"
+        )
+
+    return render_template("login.html")
+
+
+@main.route("/logout")
+def logout():
+
+    session.pop("admin", None)
+
+    return redirect(url_for("main.home"))

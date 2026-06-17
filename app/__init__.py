@@ -10,7 +10,7 @@ def create_app():
         static_folder="static"
     )
 
-    app.config["SECRET_KEY"] = "cleanpro-secret-key"
+    app.config["SECRET_KEY"] = "cleanpro-secret-key-2026"
 
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cleanpro.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
