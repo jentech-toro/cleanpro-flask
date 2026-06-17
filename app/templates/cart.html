@@ -15,10 +15,23 @@
         <h2 class="text-xl font-bold">{{ p.nombre }}</h2>
         <p>{{ p.descripcion }}</p>
         <p class="text-emerald-600 font-bold">${{ p.precio }}</p>
+        <a href="/remove-from-cart/{{ p.id }}"
+           class="mt-2 inline-block bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+
+           ➖ Eliminar  </a>
 
     </div>
 
     {% endfor %}
+
+</div>
+
+
+<div class="mt-10 bg-gray-100 p-6 rounded-xl text-right">
+
+    <h2 class="text-2xl font-bold">
+        Total: ${{ total }}
+    </h2>
 
 </div>
 

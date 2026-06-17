@@ -150,4 +150,22 @@ def cart():
 
     productos = Product.query.filter(Product.id.in_(cart_ids)).all()
 
-    return render_template("cart.html", productos=productos)
+    total = sum(p.precio for p in productos)
+
+    return render_template(
+        "cart.html",
+        productos=productos,
+        total=total
+    )
+
+@main.route("/remove-from-cart/<int:id>")
+def remove_from_cart(id):
+
+    cart = session.get("cart", [])
+
+    if id in cart:
+        cart.remove(id)
+
+    session["cart"] = cart
+
+    return redirect(url_for("main.cart"))
