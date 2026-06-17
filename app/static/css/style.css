@@ -13,3 +13,7 @@ body{
 .card-hover:hover{
     transform:translateY(-8px);
 }
+
+html {
+    scroll-behavior: smooth;
+}

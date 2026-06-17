@@ -87,13 +87,17 @@
 
 </form>
 
-    <div class="bg-white p-6 rounded-xl shadow mb-10">
+    
+<div class="bg-white p-6 rounded-xl shadow mb-10">
 
     <h2 class="text-2xl font-bold mb-4">
         ➕ Agregar Producto
     </h2>
 
-    <form action="/admin/create" method="POST" class="grid gap-4">
+    <form action="/admin/create"
+          method="POST"
+          enctype="multipart/form-data"
+          class="grid gap-4">
 
         <input name="nombre" placeholder="Nombre"
                class="border p-2 rounded" required>
@@ -109,6 +113,11 @@
                placeholder="Stock"
                class="border p-2 rounded">
 
+        <!-- 👇 ESTA ES LA PARTE QUE TE FALTABA -->
+        <input type="file"
+               name="imagen"
+               class="border p-2 rounded bg-white">
+
         <button class="bg-emerald-600 text-white p-3 rounded hover:bg-emerald-700">
             Guardar Producto
         </button>
@@ -116,6 +125,10 @@
     </form>
 
 </div>
+
+
+
+
 
     <div class="grid md:grid-cols-3 gap-6">
 
