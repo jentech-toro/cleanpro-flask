@@ -1,5 +1,6 @@
 from flask import Flask
 from app.models.product import db
+from .customer import Customer
 
 
 def create_app():

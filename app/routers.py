@@ -144,9 +144,14 @@ def dashboard():
 @main.route("/add-to-cart/<int:id>")
 def add_to_cart(id):
 
+    producto = Product.query.get_or_404(id)
+
     cart = session.get("cart", {})
 
-    cart[str(id)] = cart.get(str(id), 0) + 1
+    cantidad = cart.get(str(id), 0)
+
+    if cantidad < producto.stock:
+        cart[str(id)] = cantidad + 1
 
     session["cart"] = cart
 
@@ -200,6 +205,12 @@ def cart():
         total=total,
         mensaje=mensaje
     )
+
+@main.route("/checkout", methods=["GET"])
+def checkout():
+
+    return render_template("checkout.html")
+
 
 @main.route("/remove-from-cart/<int:id>")
 def remove_from_cart(id):
@@ -266,3 +277,4 @@ def logout():
     session.pop("admin", None)
 
     return redirect(url_for("main.home"))
+

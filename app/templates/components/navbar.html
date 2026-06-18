@@ -24,6 +24,17 @@
                     Productos
                 </a>
 
+                <a href="/cart"
+   class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition">
+
+    🛒 Carrito
+
+    {% if session.get("cart") %}
+        ({{ session.get("cart").values()|sum }})
+    {% endif %}
+
+</a>
+
                 <a href="/login"
    class="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-black transition">
 

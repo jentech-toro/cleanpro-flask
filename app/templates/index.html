@@ -164,12 +164,29 @@
             ${{ p.precio }}
         </p>
 
-        <a href="/add-to-cart/{{ p.id }}"
-   class="mt-4 inline-block bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition">
 
-   ➕ Agregar al carrito
+        <p class="text-gray-500 mt-2">
+            Stock disponible: {{ p.stock }}
+        </p>
+
+        {% if p.stock > 0 %}
+
+<a href="/add-to-cart/{{ p.id }}"
+   class="block mt-4 bg-emerald-600 text-white text-center py-3 rounded-xl hover:bg-emerald-700">
+
+    🛒 Agregar al carrito
 
 </a>
+
+{% else %}
+
+<div class="mt-4 bg-red-500 text-white text-center py-3 rounded-xl">
+
+    Sin stock
+
+</div>
+
+{% endif %}
 
     </div>
 

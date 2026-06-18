@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto py-16">
+
+    <h1 class="text-4xl font-bold mb-8">
+
+        Finalizar Compra
+
+    </h1>
+
+    <form method="POST" class="space-y-4">
+
+        <input
+            name="nombre"
+            placeholder="Nombre completo"
+            class="w-full border p-3 rounded">
+
+        <input
+            name="telefono"
+            placeholder="Teléfono"
+            class="w-full border p-3 rounded">
+
+        <input
+            name="email"
+            placeholder="Correo electrónico"
+            class="w-full border p-3 rounded">
+
+        <input
+            name="direccion"
+            placeholder="Dirección"
+            class="w-full border p-3 rounded">
+
+        <button
+            class="w-full bg-emerald-600 text-white p-4 rounded">
+
+            Continuar
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
