@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="max-w-2xl mx-auto py-16">
+<div class="max-w-5xl mx-auto py-16">
 
     <h1 class="text-4xl font-bold mb-8">
 
@@ -10,32 +10,56 @@
 
     </h1>
 
-    <form method="POST" class="space-y-4">
+    <form method="POST">
 
         <input
             name="nombre"
             placeholder="Nombre completo"
-            class="w-full border p-3 rounded">
+            class="w-full border p-3 rounded mb-6"
+            required>
 
-        <input
-            name="telefono"
-            placeholder="Teléfono"
-            class="w-full border p-3 rounded">
+        <table class="w-full border">
 
-        <input
-            name="email"
-            placeholder="Correo electrónico"
-            class="w-full border p-3 rounded">
+            <tr class="bg-gray-100">
 
-        <input
-            name="direccion"
-            placeholder="Dirección"
-            class="w-full border p-3 rounded">
+                <th class="p-3">Producto</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+
+            </tr>
+
+            {% for item in items %}
+
+            <tr>
+
+                <td class="p-3">
+                    {{ item.producto.nombre }}
+                </td>
+
+                <td class="text-center">
+                    {{ item.cantidad }}
+                </td>
+
+                <td class="text-center">
+                    ${{ "%.2f"|format(item.subtotal) }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <div class="text-right text-3xl font-bold mt-8">
+
+            Total: ${{ "%.2f"|format(total) }}
+
+        </div>
 
         <button
-            class="w-full bg-emerald-600 text-white p-4 rounded">
+            class="mt-8 bg-emerald-600 text-white px-8 py-4 rounded-xl hover:bg-emerald-700">
 
-            Continuar
+            📄 Finalizar Compra y Descargar PDF
 
         </button>
 

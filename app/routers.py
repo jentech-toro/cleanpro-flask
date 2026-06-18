@@ -278,3 +278,62 @@ def logout():
 
     return redirect(url_for("main.home"))
 
+from flask import send_file
+from app.utils.pdf_generator import generar_pedido_pdf
+
+@main.route("/checkout", methods=["GET", "POST"])
+def checkout():
+
+    cart = session.get("cart", {})
+
+    if not cart:
+        return redirect(url_for("main.cart"))
+
+    ids = [int(i) for i in cart.keys()]
+
+    productos = Product.query.filter(Product.id.in_(ids)).all()
+
+    items = []
+
+    total = 0
+
+    for p in productos:
+
+        cantidad = cart.get(str(p.id), 0)
+
+        subtotal = p.precio * cantidad
+
+        total += subtotal
+
+        items.append({
+            "producto": p,
+            "cantidad": cantidad,
+            "subtotal": subtotal
+        })
+
+    if request.method == "POST":
+
+        cliente = request.form["nombre"]
+
+        archivo = "pedido.pdf"
+
+        generar_pedido_pdf(
+            archivo,
+            cliente,
+            items,
+            total
+        )
+
+        session.pop("cart", None)
+
+        return send_file(
+            archivo,
+            as_attachment=True
+        )
+
+    return render_template(
+        "checkout.html",
+        items=items,
+        total=round(total, 2)
+    )
+

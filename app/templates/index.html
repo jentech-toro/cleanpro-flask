@@ -171,22 +171,22 @@
 
         {% if p.stock > 0 %}
 
-<a href="/add-to-cart/{{ p.id }}"
-   class="block mt-4 bg-emerald-600 text-white text-center py-3 rounded-xl hover:bg-emerald-700">
+        <a href="/add-to-cart/{{ p.id }}"
+        class="block mt-4 bg-emerald-600 text-white text-center py-3 rounded-xl hover:bg-emerald-700">
 
     🛒 Agregar al carrito
 
-</a>
+        </a>
 
-{% else %}
+        {% else %}
 
-<div class="mt-4 bg-red-500 text-white text-center py-3 rounded-xl">
+        <div class="mt-4 bg-red-500 text-white text-center py-3 rounded-xl">
 
-    Sin stock
+        Sin stock
 
-</div>
+        </div>
 
-{% endif %}
+        {% endif %}
 
     </div>
 
