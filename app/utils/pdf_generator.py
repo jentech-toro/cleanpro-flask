@@ -10,29 +10,29 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
 
-def generar_pedido_pdf(nombre_archivo, cliente, items, total):
+def generate_order_pdf(file_name, customer, items, total):
 
-    doc = SimpleDocTemplate(nombre_archivo)
+    doc = SimpleDocTemplate(file_name)
 
     styles = getSampleStyleSheet()
 
-    elementos = []
+    elements = []
 
-    elementos.append(
+    elements.append(
         Paragraph("<b>CleanPro Solutions</b>", styles["Title"])
     )
 
-    elementos.append(
-        Paragraph("Comprobante de Compra", styles["Heading2"])
+    elements.append(
+        Paragraph("Purchase Receipt", styles["Heading2"])
     )
 
-    elementos.append(
-        Paragraph(f"Cliente: {cliente}", styles["Normal"])
+    elements.append(
+        Paragraph(f"Customer: {customer}", styles["Normal"])
     )
 
-    elementos.append(Spacer(1, 15))
+    elements.append(Spacer(1, 15))
 
-    data = [["Producto", "Cantidad", "Precio", "Subtotal"]]
+    data = [["Product", "Quantity", "Price", "Subtotal"]]
 
     for item in items:
 
@@ -45,15 +45,15 @@ def generar_pedido_pdf(nombre_archivo, cliente, items, total):
 
     data.append(["", "", "TOTAL", f"${total:.2f}"])
 
-    tabla = Table(data)
+    table = Table(data)
 
-    tabla.setStyle(TableStyle([
+    table.setStyle(TableStyle([
         ("GRID", (0, 0), (-1, -1), 1, colors.grey),
         ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
         ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
         ("ALIGN", (1, 1), (-1, -1), "CENTER"),
     ]))
 
-    elementos.append(tabla)
+    elements.append(table)
 
-    doc.build(elementos)
+    doc.build(elements)
